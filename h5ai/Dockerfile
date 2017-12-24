@@ -1,8 +1,9 @@
 FROM alpine:latest
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
-ENV H5AI_VERSION 0.29.0
-
+ENV H5AI_VERSION=0.29.0 \
+    LD_PRELOAD=/usr/lib/preloadable_libiconv.so
+    
 RUN apk --update --no-cache --virtual run add \
                                php7-fpm       \
                                php7-curl      \
@@ -15,7 +16,8 @@ RUN apk --update --no-cache --virtual run add \
                                php7-gd        \
                                nginx          \
                                ffmpeg         \
-                               graphicsmagick     
+                               graphicsmagick&&\
+    apk --update --repository http://dl-3.alpinelinux.org/alpine/edge/testing add gnu-libiconv
 
 COPY . /tmp/
 
