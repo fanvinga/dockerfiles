@@ -1,0 +1,12 @@
+:80 {
+root /share
+gzip
+timeouts none
+filemanager / /share {    
+    show /share
+    allow_new true
+    allow_edit true 
+    allow_commands true 
+    database /db/filemanager.db
+    }
+}

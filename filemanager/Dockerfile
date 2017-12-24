@@ -1,0 +1,17 @@
+FROM alpine:latest
+MAINTAINER FAN VINGA<fanalcest@gmail.com>
+
+ADD Caddyfile /Caddyfile
+ 
+RUN apk --update --no-cache add curl && \
+    curl https://caddyserver.com/download/linux/amd64?plugins=http.filemanager | tar -xz caddy && \    
+    mkdir -p /share /db && \
+    mv caddy /usr/bin/caddy && \
+    chmod -R 777 /usr/bin/caddy /share /db && \
+    apk del --purge curl && \
+    rm -rf /var/cache/apk/*
+
+CMD caddy -conf /Caddyfile
+    
+WORKDIR /share
+EXPOSE 80
