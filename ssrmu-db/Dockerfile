@@ -1,4 +1,4 @@
-FROM python:3.6.3-alpine3.6
+FROM python:alpine3.7
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ENV DOMAIN=your_domain \

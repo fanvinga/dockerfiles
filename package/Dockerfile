@@ -1,4 +1,4 @@
-FROM python:2.7.14-alpine3.6
+FROM python:2-alpine3.7
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ADD . /usr/app
