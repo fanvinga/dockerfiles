@@ -1,8 +1,8 @@
 FROM alpine:latest
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
-ENV GOAL google_and_zhwikipedia
-ENV DOMAIN vinga.fun
+ENV GOAL=google_and_zhwikipedia \
+    DOMAIN=vinga.fun
 
 RUN apk --update --no-cache add gcc g++ git python3 python3-dev && \
     apk add libc-dev && pip3 install --upgrade --no-cache-dir pip && \
