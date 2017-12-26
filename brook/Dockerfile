@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.7
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 MAINTAINER WU DYLAN<nextdoorwu@gmail.com>
 

@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.7
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 RUN apk --update --no-cache add nginx git && \

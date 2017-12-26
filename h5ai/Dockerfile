@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.7
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ENV H5AI_VERSION=0.29.0 \
