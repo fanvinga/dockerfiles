@@ -3,7 +3,7 @@ MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ADD . /usr/app
 
-RUN  apk --update --no-cache add --virtual .build-deps \
+RUN  apk --no-cache add --virtual .build-deps \
                         git \
                         tar \          
                         autoconf \
@@ -11,13 +11,13 @@ RUN  apk --update --no-cache add --virtual .build-deps \
                         make \
                         build-base \
                         linux-headers && \
-     apk add --virtual runtime-tools \                       
+     apk --no-cache add --virtual runtime-tools \                       
                         openssl-dev \
                         libffi-dev && \                                  
      mkdir -p /usr/app/db && \
      pip install requests[security] && \
      pip install -r /usr/app/requirements.txt && \
-     apk del .build-deps && rm -rf /var/cache/apk/*
+     apk del .build-deps
 
 WORKDIR "/usr/app/db"
 ENTRYPOINT ["python"]

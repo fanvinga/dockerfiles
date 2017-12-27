@@ -7,11 +7,10 @@ ENV BROOK_VER=20171113 \
     PASSWORD=hyperapp \
     PORT=8888
 
-RUN apk --update --no-cache add wget && \
+RUN apk --no-cache add wget && \
     wget --no-check-certificate https://github.com/txthinking/brook/releases/download/v${BROOK_VER}/brook && \
     chmod +x brook && \
-    apk del wget && \
-    rm -rf /var/cache/apk/*
+    apk del wget
 
 WORKDIR /
 EXPOSE ${PORT}

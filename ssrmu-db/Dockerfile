@@ -7,7 +7,7 @@ ENV DOMAIN=your_domain \
     DB=sspanel         \
     NODEID=3
 
-RUN  apk update && apk add --virtual .build-deps \
+RUN  apk --no-cache add --virtual .build-deps \
                         git \
                         tar \          
                         autoconf \
@@ -15,7 +15,7 @@ RUN  apk update && apk add --virtual .build-deps \
                         make \
                         build-base \
                         linux-headers && \
-     apk add --virtual runtime-tools \
+     apk --no-cache add --virtual runtime-tools \
                         curl \
                         libsodium-dev \
                         openssl-dev \
@@ -26,12 +26,13 @@ RUN  apk update && apk add --virtual .build-deps \
                         libtool \
                         supervisor \
                         libffi-dev && \
-     git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks" --depth 1 && cd /root/shadowsocks && \
-     pip install -r requirements.txt && \
-     cp apiconfig.py userapiconfig.py && \
-     cp config.json user-config.json && \
-     sed -i "s#API_INTERFACE = 'modwebapi'#API_INTERFACE = 'glzjinmod'#" /root/shadowsocks/userapiconfig.py && \
-     apk del .build-deps && rm -rf /var/cache/apk/*
+     git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks" --depth 1 && \
+     cd  /root/shadowsocks                    && \
+     pip install -r requirements.txt          && \
+     cp  apiconfig.py userapiconfig.py        && \
+     cp  config.json  user-config.json        && \
+     sed -i "s#API_INTERFACE = 'modwebapi'#API_INTERFACE = 'glzjinmod'#" /root/shadowsocks/userapiconfig.py                  && \
+     apk del .build-deps 
 
 WORKDIR /root/shadowsocks
 ADD supervisord.conf /etc/supervisord.conf

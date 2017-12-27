@@ -5,7 +5,7 @@ ENV DOMAIN=your_domain \
     MUKEY=your_mukey \
     NODEID=3 
 
-RUN  apk update && apk add --virtual .build-deps \
+RUN  apk --no-cache add --virtual .build-deps \
                         git \
                         tar \          
                         autoconf \
@@ -13,7 +13,7 @@ RUN  apk update && apk add --virtual .build-deps \
                         make \
                         build-base \
                         linux-headers && \
-     apk add --virtual runtime-tools \
+     apk --no-cache add --virtual runtime-tools \
                         curl \
                         libsodium-dev \
                         openssl-dev \
@@ -28,7 +28,7 @@ RUN  apk update && apk add --virtual .build-deps \
      pip install --no-cache-dir -r requirements.txt && \
      cp apiconfig.py userapiconfig.py && \
      cp config.json user-config.json && \
-     apk del .build-deps && rm -rf /var/cache/apk/*
+     apk del .build-deps
 
 WORKDIR /root/shadowsocks
 ADD supervisord.conf /etc/supervisord.conf

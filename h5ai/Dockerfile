@@ -4,7 +4,7 @@ MAINTAINER FAN VINGA<fanalcest@gmail.com>
 ENV H5AI_VERSION=0.29.0 \
     LD_PRELOAD=/usr/lib/preloadable_libiconv.so
     
-RUN apk --update --no-cache --virtual run add \
+RUN apk --no-cache --virtual run add \
                                php7-fpm       \
                                php7-curl      \
                                php7-iconv     \
@@ -17,11 +17,11 @@ RUN apk --update --no-cache --virtual run add \
                                nginx          \
                                ffmpeg         \
                                graphicsmagick&&\
-    apk --update --repository http://dl-3.alpinelinux.org/alpine/edge/testing add gnu-libiconv
+    apk --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing add gnu-libiconv
 
 COPY . /tmp/
 
-RUN apk --update --no-cache --virtual tools add zip unzip tini wget patch ca-certificates   && \
+RUN apk --no-cache --virtual tools add zip unzip tini wget patch ca-certificates   && \
     cd /tmp && wget release.larsjung.de/h5ai/h5ai-${H5AI_VERSION}.zip && unzip h5ai-${H5AI_VERSION}.zip -d /usr/share/h5ai       && \
     cp -rf options.json /usr/share/h5ai/_h5ai/private/conf/options.json                   && \
     patch -p1 -ud /usr/share/h5ai/_h5ai/private/php/core/ -i /tmp/class-setup.php.patch     && \
@@ -31,7 +31,7 @@ RUN apk --update --no-cache --virtual tools add zip unzip tini wget patch ca-cer
     cp nginx.conf    /etc/nginx/nginx.conf  && \
     cp entrypoint.sh /entrypoint.sh         && \
     apk del --purge tools                   && \   
-    rm -rf /var/cache/apk/* /tmp/*   
+    rm -rf /tmp/*   
 
 CMD /entrypoint.sh
 EXPOSE 80
