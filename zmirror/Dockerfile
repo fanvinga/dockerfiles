@@ -4,14 +4,12 @@ MAINTAINER FAN VINGA<fanalcest@gmail.com>
 ENV GOAL=google_and_zhwikipedia \
     DOMAIN=vinga.fun
 
-RUN apk --update --no-cache add gcc g++ git python3 python3-dev && \
-    apk add libc-dev && pip3 install --upgrade --no-cache-dir pip && \
-    pip3 install --no-cache-dir gunicorn gevent requests flask cchardet fastcache lru-dict 
-    
-RUN git clone -b v0.30-dev https://github.com/aploium/zmirror /zmirror && cd zmirror --depth 1 && \
-    apk del gcc g++ git libc-dev && \
-    rm -rf /src && \
-    rm -rf /var/cache/apk/*
+RUN apk --no-cache add gcc g++ git python3 python3-dev libc-dev                                  && \
+    pip3 install --upgrade --no-cache-dir pip && \
+    pip3 install --no-cache-dir gunicorn gevent requests flask cchardet fastcache lru-dict    && \
+    git clone -b v0.30-dev https://github.com/aploium/zmirror /zmirror --depth 1            && \
+    apk del --purge gcc g++ git libc-dev      && \
+    rm -rf /src /zmirror/.git
     
 WORKDIR /zmirror
 EXPOSE  80
