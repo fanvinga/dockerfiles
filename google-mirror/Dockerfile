@@ -3,7 +3,7 @@ MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ENV NGINX_VER=1.13.7 \
     LANG=zh-CN
-RUN apk --no-cache add git openssl-dev pcre-dev zlib-dev wget build-base && \
+RUN apk --no-cache add git openssl-dev pcre-dev zlib-dev build-base && \
     mkdir src && cd src && \
     wget http://nginx.org/download/nginx-${NGINX_VER}.tar.gz && \
     tar xzf nginx-${NGINX_VER}.tar.gz && \
