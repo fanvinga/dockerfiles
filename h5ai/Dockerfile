@@ -15,6 +15,7 @@ RUN apk --no-cache --virtual run add \
                                php7-session   \
                                php7-exif      \
                                php7-gd        \
+                               zip            \
                                nginx          \
                                ffmpeg         \
                                graphicsmagick&&\
@@ -22,7 +23,7 @@ RUN apk --no-cache --virtual run add \
 
 COPY . /tmp/
 
-RUN apk --no-cache --virtual tools add zip tini patch ca-certificates                                  && \
+RUN apk --no-cache --virtual tools add tini patch ca-certificates                                     && \
     cd /tmp && wget release.larsjung.de/h5ai/h5ai-${H5AI_VERSION}.zip && unzip h5ai-${H5AI_VERSION}.zip -d /usr/share/h5ai                               && \
     cp -rf options.json /usr/share/h5ai/_h5ai/private/conf/options.json                        && \
     patch -p1 -ud /usr/share/h5ai/_h5ai/private/php/core/ -i /tmp/class-setup.php.patch              && \
