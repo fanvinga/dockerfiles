@@ -22,7 +22,6 @@ RUN  apk --no-cache add --virtual .build-deps \
                         pcre-dev \
                         libev-dev \
                         libtool \
-                        supervisor \
                         libffi-dev && \
      git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks" --depth 1 && cd /root/shadowsocks && \
      pip install --no-cache-dir -r requirements.txt && \
@@ -31,9 +30,8 @@ RUN  apk --no-cache add --virtual .build-deps \
      apk del .build-deps
 
 WORKDIR /root/shadowsocks
-ADD supervisord.conf /etc/supervisord.conf
 
 CMD sed -i "s#https://zhaoj.in#https://${DOMAIN}#" /root/shadowsocks/userapiconfig.py && \
     sed -i "s#glzjin#${MUKEY}#" /root/shadowsocks/userapiconfig.py && \
     sed -i "s#NODE_ID\ =\ 1#NODE_ID\ =\ ${NODEID}#" /root/shadowsocks/userapiconfig.py && \
-    supervisord -c /etc/supervisord.conf
+    python /root/shadowsocks/server.py

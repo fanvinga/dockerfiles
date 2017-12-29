@@ -24,7 +24,6 @@ RUN  apk --no-cache add --virtual .build-deps \
                         pcre-dev \
                         libev-dev \
                         libtool \
-                        supervisor \
                         libffi-dev && \
      git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks" --depth 1 && \
      cd  /root/shadowsocks                    && \
@@ -35,11 +34,10 @@ RUN  apk --no-cache add --virtual .build-deps \
      apk del .build-deps 
 
 WORKDIR /root/shadowsocks
-ADD supervisord.conf /etc/supervisord.conf
 
 CMD sed -i "s#MYSQL_HOST = '127.0.0.1'#MYSQL_HOST = '${DOMAIN}'#" /root/shadowsocks/userapiconfig.py && \
     sed -i "s#MYSQL_USER = 'ss'#MYSQL_USER = '${USER}'#" /root/shadowsocks/userapiconfig.py && \
     sed -i "s#MYSQL_PASS = 'ss'#MYSQL_PASS = '${PASSWD}'#" /root/shadowsocks/userapiconfig.py && \
     sed -i "s#MYSQL_DB = 'shadowsocks'#MYSQL_DB = '${DB}'#" /root/shadowsocks/userapiconfig.py && \
     sed -i "s#NODE_ID\ =\ 1#NODE_ID\ =\ ${NODEID}#" /root/shadowsocks/userapiconfig.py && \
-    supervisord -c /etc/supervisord.conf
+    python /root/shadowsocks/server.py
