@@ -123,9 +123,9 @@
     */
     "download": {
         "enabled": true,
-        "type": "php-tar",
+        "type": "shell-zip",
         "packageName": null,
-        "alwaysVisible": false
+        "alwaysVisible": true
     },
 
     /*
@@ -304,7 +304,7 @@
     - ignorecase: boolean, ignore case
     */
     "search": {
-        "enabled": false,
+        "enabled": true,
         "advanced": true,
         "debounceTime": 300,
         "ignorecase": true
