@@ -269,6 +269,7 @@
             "txt-makefile": 1,
             "txt-md": 2,
             "txt-py": 3,
+            "txt-php":3,
             "txt-rb": 3,
             "txt-readme": 1,
             "txt-rtf": 1,
