@@ -24,6 +24,7 @@ RUN  apk --no-cache add --virtual .build-deps \
                         libtool \
                         libffi-dev && \
      git clone -b manyuser https://github.com/SakuraSa233/shadowsocks.git "/root/shadowsocks" --depth 1 && cd /root/shadowsocks && \
+     git checkout 0732973 && \
      pip install --no-cache-dir -r requirements.txt && \
      cp apiconfig.py userapiconfig.py && \
      cp config.json user-config.json && \
