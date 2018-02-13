@@ -2,7 +2,7 @@ FROM alpine:3.7
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ENV BIND_PORT=10000 \
-    TOKEN=otunnel
+    TOKEN=token
 
 ADD otunnel /
 CMD chmod +x /otunnel && \
