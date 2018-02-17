@@ -36,7 +36,7 @@ RUN  apk --no-cache add --virtual .build-deps \
                         libev-dev \
                         libtool \
                         libffi-dev && \
-     git clone -b manyuser https://github.com/glzjin/shadowsocks.github "/root/shadowsocks" --depth 1 && \
+     git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks" --depth 1 && \
      cd  /root/shadowsocks                    && \
      pip install -r requirements.txt          && \
      cp  apiconfig.py userapiconfig.py        && \
