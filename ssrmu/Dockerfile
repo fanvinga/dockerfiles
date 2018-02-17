@@ -27,7 +27,7 @@ RUN  apk --no-cache add --virtual .build-deps \
      pip install --no-cache-dir -r requirements.txt && \
      cp apiconfig.py userapiconfig.py && \
      cp config.json user-config.json && \
-     apk del .build-deps
+     apk del .build-deps && touch /etc/hosts.deny
 
 WORKDIR /root/shadowsocks
 

@@ -31,7 +31,7 @@ RUN  apk --no-cache add --virtual .build-deps \
      cp  apiconfig.py userapiconfig.py        && \
      cp  config.json  user-config.json        && \
      sed -i "s#API_INTERFACE = 'modwebapi'#API_INTERFACE = 'glzjinmod'#" /root/shadowsocks/userapiconfig.py                  && \
-     apk del .build-deps 
+     apk del .build-deps && touch /etc/hosts.deny
 
 WORKDIR /root/shadowsocks
 
