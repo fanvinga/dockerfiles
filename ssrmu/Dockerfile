@@ -38,6 +38,7 @@ RUN  apk --no-cache add --virtual .build-deps \
                         libffi-dev && \
      git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks" --depth 1 && \
      cd  /root/shadowsocks                    && \
+     curl https://raw.githubusercontent.com/SakuraSa233/shadowsocks/e355d6add58634707bbb2318d4ffb5c1cff6820d/shadowsocks/tcprelay.py > shadowsocks/tcprelay.py  && \
      pip install -r requirements.txt          && \
      cp  apiconfig.py userapiconfig.py        && \
      cp  config.json  user-config.json        && \
