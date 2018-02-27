@@ -18,7 +18,7 @@ ENV NODE_ID=1                     \
     REDIRECT=github.com           \
     FAST_OPEN=false
 
-RUN  apk --no-cache add --virtual runtime-tools \
+RUN  apk --no-cache add \
                         curl \
                         python3-dev \
                         libsodium-dev \
@@ -46,7 +46,8 @@ RUN  apk --no-cache add --virtual runtime-tools \
      pip install -r requirements.txt          && \
      cp  apiconfig.py userapiconfig.py        && \
      cp  config.json  user-config.json        && \
-     apk del .build-deps && touch /etc/hosts.deny
+     rm -rf ~/.cache && touch /etc/hosts.deny && \
+     apk del --purge .build-deps
 
 WORKDIR /root/shadowsocks
 
