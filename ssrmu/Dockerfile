@@ -1,4 +1,4 @@
-FROM python:alpine3.7
+FROM alpine:3.7
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ENV NODE_ID=1                     \
@@ -18,16 +18,9 @@ ENV NODE_ID=1                     \
     REDIRECT=github.com           \
     FAST_OPEN=false
 
-RUN  apk --no-cache add --virtual .build-deps \
-                        git \
-                        tar \
-                        autoconf \
-                        automake \
-                        make \
-                        build-base \
-                        linux-headers && \
-     apk --no-cache add --virtual runtime-tools \
+RUN  apk --no-cache add --virtual runtime-tools \
                         curl \
+                        python3-dev \
                         libsodium-dev \
                         openssl-dev \
                         udns-dev \
@@ -35,7 +28,18 @@ RUN  apk --no-cache add --virtual .build-deps \
                         pcre-dev \
                         libev-dev \
                         libtool \
-                        libffi-dev && \
+                        libffi-dev            && \
+     apk --no-cache add --virtual .build-deps \
+                        git \
+                        tar \
+                        make \
+                        py3-pip \
+                        autoconf \
+                        automake \
+                        build-base \
+                        linux-headers         && \
+     ln -s /usr/bin/python3 /usr/bin/python   && \
+     ln -s /usr/bin/pip3    /usr/bin/pip      && \
      git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks" --depth 1 && \
      cd  /root/shadowsocks                    && \
      curl https://raw.githubusercontent.com/SakuraSa233/shadowsocks/e355d6add58634707bbb2318d4ffb5c1cff6820d/shadowsocks/tcprelay.py > shadowsocks/tcprelay.py  && \
