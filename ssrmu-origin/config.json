@@ -8,7 +8,7 @@
     "password": "m",
     "method": "aes-128-ctr",
     "protocol": "auth_aes128_md5",
-    "protocol_param": "",
+    "protocol_param": "5",
     "obfs": "plain",
     "obfs_param": "",
     "speed_limit_per_con": 0,
