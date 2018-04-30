@@ -41,10 +41,8 @@ RUN  apk --no-cache add \
                         linux-headers         && \
      ln -s /usr/bin/python3 /usr/bin/python   && \
      ln -s /usr/bin/pip3    /usr/bin/pip      && \
-     git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks" --depth 1 && \
+     git clone -b manyuser https://github.com/SakuraSa233/shadowsocks.git "/root/shadowsocks" --depth 1 && \
      cd  /root/shadowsocks                    && \
-     curl https://raw.githubusercontent.com/fanvinga/dockerfiles/master/ssrmu/tcprelay.py     > shadowsocks/tcprelay.py  && \
-     curl https://raw.githubusercontent.com/fanvinga/dockerfiles/master/ssrmu/webapi_utils.py > webapi_utils.py          && \
      pip install -r requirements.txt          && \
      cp  apiconfig.py userapiconfig.py        && \
      cp  config.json  user-config.json        && \
