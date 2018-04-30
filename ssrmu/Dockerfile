@@ -43,7 +43,8 @@ RUN  apk --no-cache add \
      ln -s /usr/bin/pip3    /usr/bin/pip      && \
      git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks" --depth 1 && \
      cd  /root/shadowsocks                    && \
-     curl https://raw.githubusercontent.com/fanvinga/dockerfiles/master/ssrmu/tcprelay.py > shadowsocks/tcprelay.py                                   && \
+     curl https://raw.githubusercontent.com/fanvinga/dockerfiles/master/ssrmu/tcprelay.py     > shadowsocks/tcprelay.py  && \
+     curl https://raw.githubusercontent.com/fanvinga/dockerfiles/master/ssrmu/webapi_utils.py > webapi_utils.py          && \
      pip install -r requirements.txt          && \
      cp  apiconfig.py userapiconfig.py        && \
      cp  config.json  user-config.json        && \
@@ -61,9 +62,9 @@ CMD sed -i "s|NODE_ID = 1|NODE_ID = ${NODE_ID}|"                               /
     sed -i "s|MU_REGEX = '%5m%id.%suffix'|MU_REGEX = '${MU_REGEX}'|"           /root/shadowsocks/userapiconfig.py && \
     sed -i "s|API_INTERFACE = 'modwebapi'|API_INTERFACE = '${API_INTERFACE}'|" /root/shadowsocks/userapiconfig.py && \
     sed -i "s|WEBAPI_URL = 'https://zhaoj.in'|WEBAPI_URL = '${WEBAPI_URL}'|"   /root/shadowsocks/userapiconfig.py && \
-    sed -i "s|WEBAPI_TOKEN = 'glzjin'|WEBAPI_TOKEN = '${WEBAPI_TOKEN}'|"      /root/shadowsocks/userapiconfig.py && \
+    sed -i "s|WEBAPI_TOKEN = 'glzjin'|WEBAPI_TOKEN = '${WEBAPI_TOKEN}'|"       /root/shadowsocks/userapiconfig.py && \
     sed -i "s|MYSQL_HOST = '127.0.0.1'|MYSQL_HOST = '${MYSQL_HOST}'|"          /root/shadowsocks/userapiconfig.py && \
-    sed -i "s|MYSQL_PORT = '3306'|MYSQL_PORT = '${MYSQL_PORT}'|"          /root/shadowsocks/userapiconfig.py && \
+    sed -i "s|MYSQL_PORT = '3306'|MYSQL_PORT = '${MYSQL_PORT}'|"               /root/shadowsocks/userapiconfig.py && \
     sed -i "s|MYSQL_USER = 'ss'|MYSQL_USER = '${MYSQL_USER}'|"                 /root/shadowsocks/userapiconfig.py && \
     sed -i "s|MYSQL_PASS = 'ss'|MYSQL_PASS = '${MYSQL_PASS}'|"                 /root/shadowsocks/userapiconfig.py && \
     sed -i "s|MYSQL_DB = 'shadowsocks'|MYSQL_DB = '${MYSQL_DB}'|"              /root/shadowsocks/userapiconfig.py && \
