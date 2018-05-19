@@ -1,8 +1,9 @@
-FROM node:alpine
+FROM alpine:3.7
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
-RUN apk add --no-cache libstdc++ nginx && \
+RUN apk add --no-cache libstdc++ nginx nodejs && \
     apk add --no-cache --virtual .build-deps \
+        nodejs-npm \
         binutils-gold \
         git \
         curl \
@@ -16,6 +17,7 @@ RUN apk add --no-cache libstdc++ nginx && \
     git clone https://github.com/CaiJinyc/vue-music-webapp --depth 1 && \
     cd /vue-music-webapp && \
     npm install && npm run build && \
+    npm cache clean --force && \
     apk del --purge .build-deps
 
 ADD nginx.conf /etc/nginx/nginx.conf
