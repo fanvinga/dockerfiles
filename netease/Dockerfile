@@ -1,8 +1,9 @@
-FROM alpine:3.7
+FROM alpine:3.7 as builder
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
-RUN apk add --no-cache libstdc++ nginx nodejs && \
-    apk add --no-cache --virtual .build-deps \
+RUN apk add --no-cache --virtual .build-deps \
+        libstdc++ \
+        nodejs \
         nodejs-npm \
         binutils-gold \
         git \
@@ -20,8 +21,10 @@ RUN apk add --no-cache libstdc++ nginx nodejs && \
     npm cache clean --force && \
     apk del --purge .build-deps
 
-ADD nginx.conf /etc/nginx/nginx.conf
+FROM alpine:3.7
 
-WORKDIR /vue-music-webapp
+RUN apk add --no-cache nginx
+COPY --from=builder /vue-music-webapp/dist /dist/. 
+COPY nginx.conf /etc/nginx/nginx.conf
 
-CMD nginx && node prod.server.js
+CMD nginx
