@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ENV NODE_ID=1                     \

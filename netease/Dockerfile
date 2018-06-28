@@ -1,4 +1,4 @@
-FROM alpine:3.7 as builder
+FROM alpine:3.8 as builder
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 RUN apk add --no-cache --virtual .build-deps \
@@ -21,7 +21,7 @@ RUN apk add --no-cache --virtual .build-deps \
     npm cache clean --force && \
     apk del --purge .build-deps
 
-FROM alpine:3.7
+FROM alpine:3.8
 
 RUN apk add --no-cache nginx
 COPY --from=builder /vue-music-webapp/dist /dist/. 

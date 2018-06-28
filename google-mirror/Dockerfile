@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ENV NGINX_VER=1.13.7 \
