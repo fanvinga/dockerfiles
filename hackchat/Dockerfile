@@ -1,22 +1,24 @@
 FROM alpine:3.8
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
-RUN apk --no-cache add git make nodejs nodejs-npm supervisor nginx
-RUN git clone https://github.com/AndrewBelt/hack.chat.git && \
-    cd hack.chat && \
-    git checkout 5ca90f9 && \
-    rm -rf node_modules && \
-    npm install && \
-    cp config-sample.json config.json && \
-    cd client && \
-    npm install -g less jade http-server && \
-    make && \
-    apk del git make nodejs-npm
+ENV ADMIN_NAME=admin 		\
+	ADMIN_PASSWORD=password \
+	PASSWORD_SALT=salt 		\
+    PROTOCOL=wss
 
-ADD client.js /hack.chat/client/client.js
-ADD supervisord.conf /etc/supervisor/supervisord.conf
-ADD nginx.conf /etc/nginx/nginx.conf
+RUN apk --no-cache add git nodejs nodejs-npm nginx 		  && \
+	git clone https://github.com/hack-chat/main --depth 1 && \
+    cd main/server && npm install && cd /main			  && \
+    rm -rf .git clientSource documentation		 		  && \
+    apk del --purge git nodejs-npm
 
-WORKDIR /hack.chat/
-CMD supervisord -c /etc/supervisor/supervisord.conf
-EXPOSE 80
+ADD config.json /main/server/config/config.json
+ADD nginx.conf  /etc/nginx/nginx.conf
+
+WORKDIR /main/server
+
+CMD sed -i "s|ws://|${PROTOCOL}://|g" 			  /main/client/client.js 		  && \
+	sed -i "s/ADMIN_NAME/${ADMIN_NAME}/g" 		  /main/server/config/config.json && \
+	sed -i "s/ADMIN_PASSWORD/${ADMIN_PASSWORD}/g" /main/server/config/config.json && \
+	sed -i "s/PASSWORD_SALT/${PASSWORD_SALT}/g"   /main/server/config/config.json && \
+	nginx && node main.js
