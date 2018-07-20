@@ -6,11 +6,11 @@
 
 **filemanager**: https://vinga.tech/filemanager
 
-**google-mirror**: https://vinga.tech/google-mirror
+**google-mirror**: https://vinga.tech/google
 
 **h5ai**: https://vinga.tech/h5ai
 
-**hackchat**: https://vinga.tech/hackchat
+**hackchat**: https://vinga.tech/chat
 
 **netease**: https://vinga.tech/netease
 
@@ -22,4 +22,4 @@
 
 **ssrmu**: https://vinga.tech/ssrmu
 
-**zmirror**: https://vinga.tech/zmirror
+**zmirror**: https://vinga.tech/mirror
