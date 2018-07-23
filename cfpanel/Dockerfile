@@ -17,6 +17,9 @@ RUN apk --no-cache --virtual php-exts add php7          \
 COPY nginx.conf   /etc/nginx/nginx.conf
 COPY php-fpm.conf /etc/php7/php-fpm.conf
 
+WORKDIR /app
+EXPOSE 80
+
 CMD sed -i "s/e9e4498f0584b7098692512db0c62b48/${HOST_KEY}/g" /app/config.php && \
     sed -i "s/ze3kr@example.com/${HOST_MAIL}/g"               /app/config.php && \
     nginx                                                                     && \
