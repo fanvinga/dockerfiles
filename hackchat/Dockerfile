@@ -16,6 +16,7 @@ ADD config.json /main/server/config/config.json
 ADD nginx.conf  /etc/nginx/nginx.conf
 
 WORKDIR /main/server
+EXPOSE 80
 
 CMD sed -i "s|ws://|${PROTOCOL}://|g"             /main/client/client.js          && \
     sed -i "s/ADMIN_NAME/${ADMIN_NAME}/g"         /main/server/config/config.json && \
