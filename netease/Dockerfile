@@ -27,4 +27,5 @@ RUN apk add --no-cache nginx
 COPY --from=builder /vue-music-webapp/dist /dist/. 
 COPY nginx.conf /etc/nginx/nginx.conf
 
+EXPOSE 80
 CMD nginx
