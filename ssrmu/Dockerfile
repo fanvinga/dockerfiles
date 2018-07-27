@@ -44,14 +44,13 @@ RUN  apk --no-cache add \
      git clone -b manyuser https://github.com/SakuraSa233/shadowsocks.git "/root/shadowsocks" --depth 1 && \
      cd  /root/shadowsocks                    && \
      pip install -r requirements.txt          && \
-     cp  apiconfig.py userapiconfig.py        && \
-     cp  config.json  user-config.json        && \
      rm -rf ~/.cache && touch /etc/hosts.deny && \
      apk del --purge .build-deps
 
 WORKDIR /root/shadowsocks
 
-CMD sed -i "s|NODE_ID = 1|NODE_ID = ${NODE_ID}|"                               /root/shadowsocks/userapiconfig.py && \
+CMD cp apiconfig.py userapiconfig.py &&                                        cp   config.json  user-config.json && \
+    sed -i "s|NODE_ID = 1|NODE_ID = ${NODE_ID}|"                               /root/shadowsocks/userapiconfig.py && \
     sed -i "s|SPEEDTEST = 6|SPEEDTEST = ${SPEEDTEST}|"                         /root/shadowsocks/userapiconfig.py && \
     sed -i "s|CLOUDSAFE = 1|CLOUDSAFE = ${CLOUDSAFE}|"                         /root/shadowsocks/userapiconfig.py && \
     sed -i "s|AUTOEXEC = 0|AUTOEXEC = ${AUTOEXEC}|"                            /root/shadowsocks/userapiconfig.py && \
