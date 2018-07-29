@@ -1,8 +1,8 @@
 FROM alpine:3.8
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
-COPY . /speedtest/
-WORKDIR /speedtest
+COPY . /app/
+WORKDIR /app
 EXPOSE 80
 
 RUN apk --no-cache add php7		 \
