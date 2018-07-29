@@ -9,6 +9,7 @@ ENV ADMIN_NAME=admin         \
 RUN apk --no-cache add git nodejs nodejs-npm nginx        && \
     git clone https://github.com/hack-chat/main --depth 1 && \
     cd main/server && npm install && cd /main             && \
+    ln -s /main/client /app                               && \
     rm -rf .git clientSource documentation                && \
     apk del --purge git nodejs-npm
 
