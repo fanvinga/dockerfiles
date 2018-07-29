@@ -24,8 +24,8 @@ RUN apk add --no-cache --virtual .build-deps \
 FROM alpine:3.8
 
 RUN apk add --no-cache nginx
-COPY --from=builder /vue-music-webapp/dist /dist/. 
+COPY --from=builder /vue-music-webapp/dist /app/
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
-CMD nginx
+CMD nginx -g "daemon off;"
