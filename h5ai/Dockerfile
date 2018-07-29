@@ -3,7 +3,7 @@ MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ENV H5AI_VERSION=0.29.0 \
     LD_PRELOAD=/usr/lib/preloadable_libiconv.so
-    
+
 RUN apk --no-cache --virtual run add \
                                php7-fpm       \
                                php7-curl      \
@@ -23,15 +23,15 @@ RUN apk --no-cache --virtual run add \
 
 COPY . /tmp/
 
-RUN apk --no-cache --virtual tools add tini patch ca-certificates                                     && \
-    cd /tmp && mkdir -p /usr/share/h5ai          && \
-    wget release.larsjung.de/h5ai/h5ai-${H5AI_VERSION}.zip && unzip h5ai-${H5AI_VERSION}.zip -d /usr/share/h5ai                               && \
-    cp -rf options.json /usr/share/h5ai/_h5ai/private/conf/options.json                        && \
-    patch -p1 -ud /usr/share/h5ai/_h5ai/private/php/core/ -i /tmp/class-setup.php.patch              && \
-    chown nginx:www-data /usr/share/h5ai/_h5ai/public/cache/                                    && \
-    chown nginx:www-data /usr/share/h5ai/_h5ai/private/cache/                                   && \
-    cp  nginx.conf           /etc/nginx/         && \
-    cp  php-fpm.conf         /etc/php7/          && \
+RUN apk --no-cache --virtual tools add tini patch ca-certificates             && \
+    cd /tmp && mkdir -p /app                                                  && \
+    wget release.larsjung.de/h5ai/h5ai-${H5AI_VERSION}.zip                    && \
+    unzip h5ai-${H5AI_VERSION}.zip -d /app                                    && \
+    cp -rf options.json /app/_h5ai/private/conf/options.json                  && \
+    patch -p1 -ud /app/_h5ai/private/php/core/ -i /tmp/class-setup.php.patch  && \
+    chown nginx:www-data /app/_h5ai/public/cache/                             && \
+    chown nginx:www-data /app/_h5ai/private/cache/                            && \
+    cp  nginx.conf /etc/nginx/ && cp php-fpm.conf /etc/php7/                  && \
     apk del --purge tools && rm -rf /tmp/*   
 
 EXPOSE 80
