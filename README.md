@@ -16,8 +16,6 @@
 
 **otunnel**: https://vinga.tech/otunnel
 
-**package**: https://vinga.tech/package
-
 **speedtest**: https://vinga.tech/speedtest
 
 **ssrmu**: https://vinga.tech/ssrmu
