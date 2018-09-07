@@ -20,6 +20,7 @@ WORKDIR /main/server
 EXPOSE 80
 
 CMD sed -i "s|ws://|${PROTOCOL}://|g"             /main/client/client.js          && \
+    sed -i "s|:6060|/ws|g"                        /main/client/client.js          && \
     sed -i "s/ADMIN_NAME/${ADMIN_NAME}/g"         /main/server/config/config.json && \
     sed -i "s/ADMIN_PASSWORD/${ADMIN_PASSWORD}/g" /main/server/config/config.json && \
     sed -i "s/PASSWORD_SALT/${PASSWORD_SALT}/g"   /main/server/config/config.json && \
