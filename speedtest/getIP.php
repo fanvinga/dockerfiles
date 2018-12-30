@@ -1,25 +1,31 @@
 <?php
-
+/*
+	This script detects the client's IP address and fetches ISP info from ipinfo.io/
+	Output from this script is a JSON string composed of 2 objects: a string called processedString which contains the combined IP, ISP, Contry and distance as it can be presented to the user; and an object called rawIspInfo which contains the raw data from ipinfo.io (will be empty if isp detection is disabled).
+	Client side, the output of this script can be treated as JSON or as regular text. If the output is regular text, it will be shown to the user as is.
+*/
+error_reporting(0);
 $ip = "";
-header('Content-Type: text/plain; charset=utf-8');
+header('Content-Type: application/json; charset=utf-8');
 if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
     $ip = $_SERVER['HTTP_CLIENT_IP'];
 } elseif (!empty($_SERVER['X-Real-IP'])) {
     $ip = $_SERVER['X-Real-IP'];
 } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
     $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    $ip = preg_replace("/,.*/", "", $ip); # hosts are comma-separated, client is first
 } else {
     $ip = $_SERVER['REMOTE_ADDR'];
 }
 
 $ip = preg_replace("/^::ffff:/", "", $ip);
 
-if (strpos($ip, '::1') !== false) {
-    echo $ip . " - localhost ipv6 access";
+if ($ip == "::1") { // ::1/128 is the only localhost ipv6 address. there are no others, no need to strpos this
+    echo json_encode(['processedString' => $ip . " - localhost ipv6 access", 'rawIspInfo' => ""]);
     die();
 }
-if (strpos($ip, '127.0.0') !== false) {
-    echo $ip . " - localhost ipv4 access";
+if (strpos($ip, '127.') === 0) { //anything within the 127/8 range is localhost ipv4, the ip must start with 127.0
+    echo json_encode(['processedString' => $ip . " - localhost ipv4 access", 'rawIspInfo' => ""]);
     die();
 }
 
@@ -42,9 +48,11 @@ function distance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo) {
 
 if (isset($_GET["isp"])) {
     $isp = "";
+	$rawIspInfo=null;
     try {
         $json = file_get_contents("https://ipinfo.io/" . $ip . "/json");
         $details = json_decode($json, true);
+		$rawIspInfo=$details;
         if (array_key_exists("org", $details))
             $isp .= $details["org"];
         else
@@ -87,8 +95,8 @@ if (isset($_GET["isp"])) {
     } catch (Exception $ex) {
         $isp = "Unknown ISP";
     }
-    echo $ip . " - " . $isp;
+    echo json_encode(['processedString' => $ip . " - " . $isp, 'rawIspInfo' => $rawIspInfo]);
 } else {
-    echo $ip;
+    echo json_encode(['processedString' => $ip, 'rawIspInfo' => ""]);
 }
 ?>
