@@ -19,6 +19,9 @@ ENV NODE_ID=0                     \
     REDIRECT=github.com           \
     FAST_OPEN=false
 
+COPY . /root/shadowsocks
+WORKDIR /root/shadowsocks
+
 RUN  apk --no-cache add \
                         curl \
                         python3-dev \
@@ -31,7 +34,6 @@ RUN  apk --no-cache add \
                         libtool \
                         libffi-dev            && \
      apk --no-cache add --virtual .build-deps \
-                        git \
                         tar \
                         make \
                         py3-pip \
@@ -41,14 +43,10 @@ RUN  apk --no-cache add \
                         linux-headers         && \
      ln -s /usr/bin/python3 /usr/bin/python   && \
      ln -s /usr/bin/pip3    /usr/bin/pip      && \
-     git clone -b manyuser https://github.com/SakuraSa233/shadowsocks.git "/root/shadowsocks" --depth 1 && \
-     cd  /root/shadowsocks                    && \
      pip install --upgrade pip                && \
      pip install -r requirements.txt          && \
      rm -rf ~/.cache && touch /etc/hosts.deny && \
      apk del --purge .build-deps
-
-WORKDIR /root/shadowsocks
 
 CMD cp apiconfig.py userapiconfig.py &&                                        cp   config.json  user-config.json && \
     sed -i "s|NODE_ID = 1|NODE_ID = ${NODE_ID}|"                               /root/shadowsocks/userapiconfig.py && \
