@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.9
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 COPY . /app/
