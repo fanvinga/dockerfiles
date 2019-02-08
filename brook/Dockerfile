@@ -2,7 +2,7 @@ FROM alpine:3.9
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 MAINTAINER WU DYLAN<nextdoorwu@gmail.com>
 
-ENV BROOK_VER=20181212 \
+ENV BROOK_VER=20190205 \
     MODE=server \
     PASSWORD=hyperapp \
     PORT=8888
