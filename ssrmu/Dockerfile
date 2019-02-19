@@ -2,6 +2,8 @@ FROM alpine:3.9
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
 ENV NODE_ID=0                     \
+    DNS_1=1.0.0.1                 \
+    DNS_2=8.8.8.8                 \
     SPEEDTEST=6                   \
     CLOUDSAFE=0                   \
     AUTOEXEC=0                    \
@@ -66,4 +68,5 @@ CMD cp apiconfig.py userapiconfig.py &&                                        c
     sed -i "s|MYSQL_DB = 'shadowsocks'|MYSQL_DB = '${MYSQL_DB}'|"              /root/shadowsocks/userapiconfig.py && \
     sed -i "s|\"redirect\": \"\"|\"redirect\": \"${REDIRECT}\"|"               /root/shadowsocks/user-config.json && \
     sed -i "s|\"fast_open\": false|\"fast_open\": ${FAST_OPEN}|"               /root/shadowsocks/user-config.json && \
+    echo -e "${DNS_1}\n${DNS_2}\n" >                                           /root/shadowsocks/dns.conf         && \
     python /root/shadowsocks/server.py
