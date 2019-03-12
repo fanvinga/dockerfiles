@@ -18,7 +18,7 @@
     "dns_ipv6": false,
     "connect_verbose_info": 0,
     "connect_hex_data": 0,
-    "redirect": "",
-    "fast_open": false,
+    "redirect": "${REDIRECT}",
+    "fast_open": ${FAST_OPEN},
     "friendly_detect": 1
 }
