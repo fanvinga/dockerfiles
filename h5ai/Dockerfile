@@ -19,7 +19,7 @@ RUN apk --no-cache --virtual run add \
                                nginx          \
                                ffmpeg         \
                                graphicsmagick&&\
-    apk --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing add gnu-libiconv
+    apk --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/community add gnu-libiconv
 
 COPY . /tmp/
 
