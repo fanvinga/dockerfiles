@@ -1,7 +1,7 @@
 FROM alpine:3.9
 MAINTAINER FAN VINGA<fanalcest@gmail.com>
 
-ENV H5AI_VERSION=0.29.0 \
+ENV H5AI_VERSION=0.29.2 \
     USER=vinga          \
     PASSWD=vinga        \
     LD_PRELOAD=/usr/lib/preloadable_libiconv.so
