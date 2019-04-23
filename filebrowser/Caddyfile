@@ -2,11 +2,11 @@
 root /share
 gzip
 timeouts none
-filemanager / /share {    
+filebrowser / /share {    
     show /share
     allow_new true
     allow_edit true 
     allow_commands true 
-    database /db/filemanager.db
+    database /db/filebrowser.db
     }
 }
