@@ -7,7 +7,7 @@ ENV FORCE_UNSAFE_CONFIGURE=1 \
     PREFIX="https://downloads.openwrt.org/snapshots/targets/ramips/mt7621"               \
     PACKAGES="vim htop wget libustream-openssl ca-certificates luci luci-i18n-base-zh-cn \
              automount autosamba minieap luci-proto-minieap                              \
-             e2fsprogs fdisk lsblk usbutils block-mount luci-app-mwan3 luci-app-upnp     \
+             e2fsprogs fdisk lsblk usbutils block-mount luci-app-mwan3 luci-app-upnp luci-app-hd-idle \
              avahi-utils netatalk shadow-groupadd shadow-groupdel shadow-useradd shadow-userdel \
              -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -odhcpd-ipv6only -kmod-ipt-offload"
 
