@@ -9,7 +9,7 @@ ENV FORCE_UNSAFE_CONFIGURE=1 \
              automount autosamba minieap luci-proto-minieap                              \
              e2fsprogs fdisk lsblk usbutils block-mount luci-app-mwan3 luci-app-upnp luci-app-hd-idle \
              avahi-utils netatalk shadow-groupadd shadow-groupdel shadow-useradd shadow-userdel \
-             -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -odhcpd-ipv6only -kmod-ipt-offload"
+             -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -luci-proto-ipv6 -odhcpd-ipv6only -kmod-ipt-offload"
 
 RUN apt update && apt install -y build-essential \
                                  curl \
@@ -41,12 +41,11 @@ ADD https://github.com/ysc3839/luci-proto-minieap/releases/download/v2.0-0/luci-
 RUN curl -fsSL ${PREFIX}/openwrt-imagebuilder-ramips-${ARCH}.Linux-x86_64.tar.xz | tar -xJ \
     && mv openwrt-imagebuilder-ramips-${ARCH}.Linux-x86_64 imagebuilder && cd imagebuilder \
     && cp /sdk/bin/packages/mipsel_24kc/base/*.ipk packages/ \
-    && make image PROFILE=${PROFILE} PACKAGES="${PACKAGES}" \
-    && find bin -type f -name "*sysupgrade*" -exec mv {} ~ \;
+    && make image CONFIG_IPV6=n PROFILE=${PROFILE} PACKAGES="${PACKAGES}" BIN_DIR=/root
 
 FROM alpine as prod
 
 RUN apk add --no-cache python3
-COPY --from=builder /root /
+COPY --from=builder /root /root
 
-CMD python3 -m http.server
+CMD python3 -m http.server -d ~ 80
