@@ -1,7 +1,0 @@
-{
-	"adminName": "ADMIN_NAME",
-	"adminPass": "ADMIN_PASSWORD",
-	"websocketPort": 6060,
-	"tripSalt": "PASSWORD_SALT",
-	"mods": []
-}
