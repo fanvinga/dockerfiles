@@ -31,8 +31,8 @@ RUN apk --no-cache --virtual tools add tini patch ca-certificates             &&
     patch -p1 -ud /app/_h5ai/private/php/core/ -i /tmp/class-setup.php.patch  && \
     chown nginx:www-data /app/_h5ai/public/cache/                             && \
     chown nginx:www-data /app/_h5ai/private/cache/                            && \
-    cp  nginx.conf /etc/nginx/ && cp php-fpm.conf /etc/php7/                  && \
-    apk del --purge tools && rm -rf /tmp/*   
+    cp  nginx.conf /etc/nginx/nginx.conf && cp php-fpm.conf /etc/php7/        && \
+    apk del --purge tools && rm -rf /tmp/*
 
 EXPOSE 80
 
