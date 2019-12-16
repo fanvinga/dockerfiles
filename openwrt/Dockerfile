@@ -7,8 +7,8 @@ ENV FORCE_UNSAFE_CONFIGURE=1 \
     SDK="openwrt-sdk-ramips-mt7621_gcc-8.3.0_musl.Linux-x86_64"                          \
     IMAGEBUILDER="openwrt-imagebuilder-ramips-mt7621.Linux-x86_64"                       \
     PREFIX="https://downloads.openwrt.org/snapshots/targets/ramips/mt7621"               \
-    PACKAGES="vim htop wget libustream-openssl ca-certificates luci luci-i18n-base-zh-cn \
-              avahi-utils netatalk shadow-groupadd shadow-groupdel shadow-useradd shadow-userdel \
+    PACKAGES="vim htop wget bind-dig libustream-openssl ca-certificates luci luci-i18n-base-zh-cn   \
+              avahi-utils netatalk shadow-groupadd shadow-groupdel shadow-useradd shadow-userdel    \
               automount autosamba e2fsprogs fdisk lsblk block-mount luci-app-hd-idle luci-app-mwan3 \
               minieap luci-proto-minieap \
               -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -luci-proto-ipv6 -odhcpd-ipv6only -kmod-ipt-offload"
