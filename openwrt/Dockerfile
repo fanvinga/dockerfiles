@@ -1,15 +1,17 @@
 FROM debian:latest as builder
 
 SHELL ["/bin/bash", "-c"]
+
 ENV FORCE_UNSAFE_CONFIGURE=1 \
-    ARCH="mt7621"            \
     PROFILE="xiaoyu_xy-c5"   \
+    SDK="openwrt-sdk-ramips-mt7621_gcc-8.3.0_musl.Linux-x86_64"                          \
+    IMAGEBUILDER="openwrt-imagebuilder-ramips-mt7621.Linux-x86_64"                       \
     PREFIX="https://downloads.openwrt.org/snapshots/targets/ramips/mt7621"               \
     PACKAGES="vim htop wget libustream-openssl ca-certificates luci luci-i18n-base-zh-cn \
-             automount autosamba minieap luci-proto-minieap                              \
-             e2fsprogs fdisk lsblk usbutils block-mount luci-app-mwan3 luci-app-upnp luci-app-hd-idle \
-             avahi-utils netatalk shadow-groupadd shadow-groupdel shadow-useradd shadow-userdel \
-             -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -luci-proto-ipv6 -odhcpd-ipv6only -kmod-ipt-offload"
+              avahi-utils netatalk shadow-groupadd shadow-groupdel shadow-useradd shadow-userdel \
+              automount autosamba e2fsprogs fdisk lsblk block-mount luci-app-hd-idle luci-app-mwan3 \
+              minieap luci-proto-minieap \
+              -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -luci-proto-ipv6 -odhcpd-ipv6only -kmod-ipt-offload"
 
 RUN apt update && apt install -y build-essential \
                                  curl \
@@ -29,18 +31,16 @@ RUN apt update && apt install -y build-essential \
                                  wget \
                                  zlib1g-dev 
 
-RUN curl -fsSL ${PREFIX}/openwrt-sdk-ramips-${ARCH}_gcc-8.3.0_musl.Linux-x86_64.tar.xz | tar -xJ \
-    && mv openwrt-sdk-ramips-${ARCH}_gcc-8.3.0_musl.Linux-x86_64 sdk && cd sdk                           \
+RUN curl -fsSL ${PREFIX}/${SDK}.tar.xz | tar -xJ && cd ${SDK} \
     && svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/automount package/automount  \
     && svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/autosamba package/autosamba  \
     && git clone --depth 1 https://github.com/fanvinga/openwrt-minieap.git package/minieap               \
     && make PROFILE=${PROFILE} defconfig && make package/{automount,autosamba,minieap}/compile 
 
-ADD https://github.com/ysc3839/luci-proto-minieap/releases/download/v2.0-0/luci-proto-minieap_2.0-1_all.ipk /sdk/bin/packages/mipsel_24kc/base/
+ADD https://github.com/ysc3839/luci-proto-minieap/releases/download/v2.0-0/luci-proto-minieap_2.0-1_all.ipk /${SDK}/bin/packages/mipsel_24kc/base/
     
-RUN curl -fsSL ${PREFIX}/openwrt-imagebuilder-ramips-${ARCH}.Linux-x86_64.tar.xz | tar -xJ \
-    && mv openwrt-imagebuilder-ramips-${ARCH}.Linux-x86_64 imagebuilder && cd imagebuilder \
-    && cp /sdk/bin/packages/mipsel_24kc/base/*.ipk packages/ \
+RUN curl -fsSL ${PREFIX}/${IMAGEBUILDER}.tar.xz | tar -xJ && cd ${IMAGEBUILDER} \
+    && cp /${SDK}/bin/packages/mipsel_24kc/base/*.ipk packages/ \
     && make image CONFIG_IPV6=n PROFILE=${PROFILE} PACKAGES="${PACKAGES}" BIN_DIR=/root
 
 FROM alpine as prod
