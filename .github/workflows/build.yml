@@ -1,0 +1,46 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches:
+        - master
+
+jobs:
+ 
+  build:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+
+    steps:
+        - name: install buildx
+          run: |
+            mkdir -p ~/.docker/cli-plugins
+            curl -fsSL https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64 > ~/.docker/cli-plugins/docker-buildx
+            chmod a+x ~/.docker/cli-plugins/docker-buildx
+            docker buildx version
+
+        - name: enable binfmt_misc
+          run:  |
+            docker run --rm --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64
+            cat /proc/sys/fs/binfmt_misc/qemu-aarch64
+
+        - name: create & bootstrap buildx builder
+          run: |
+            docker buildx create --use --name builder
+            docker buildx inspect --bootstrap builder
+
+        - name: checkout
+          uses: actions/checkout@v2
+
+        - name: filter image name
+          run: echo ::set-env name=DOCKER_IMAGE_NAME::$(echo ${{ github.event.head_commit.message }} | awk -F ':' '{print $1}' )
+
+        - name: login & build & push
+          env:
+            DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+            DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+            DOCKER_CLI_EXPERIMENTAL: enabled
+          working-directory: ./${{ env.DOCKER_IMAGE_NAME }}
+          run: |
+              docker login --username "$DOCKER_HUB_USERNAME" --password "$DOCKER_HUB_PASSWORD"
+              docker buildx build -t "$DOCKER_HUB_USERNAME"/docker-"$DOCKER_IMAGE_NAME" --platform=linux/arm,linux/arm64,linux/amd64 --push .
