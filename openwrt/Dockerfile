@@ -14,7 +14,7 @@ ENV FORCE_UNSAFE_CONFIGURE=1 \
 
 COPY . /tmp/
 
-RUN apt update && apt install -y build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc wget unzip python
+RUN apt update && apt install -y build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc wget curl unzip python3
     
 RUN curl -fsSL ${PREFIX}/${IMAGEBUILDER}.tar.xz | tar -xJ && cd ${IMAGEBUILDER} && cp /tmp/*.ipk packages/ \
     && make image CONFIG_IPV6=n PROFILE=${PROFILE} PACKAGES="${PACKAGES}" BIN_DIR=/root
